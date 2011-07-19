@@ -40,6 +40,7 @@ def direciona(args):
 def log(msg):
     """ Salva mensagens no arquivo temporario """
 
+    home = os.getenv('HOME')
     f = open(home+"/.aa.txt","a")
 
     try:
@@ -51,8 +52,6 @@ def log(msg):
     return
 
 if __name__=="__main__":
-    global home
-    home = os.getenv('HOME')
 
     if len(sys.argv) > 1:
         direciona(sys.argv[1:])
