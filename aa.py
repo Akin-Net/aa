@@ -30,9 +30,9 @@ def direciona(args):
         # registra hora de fim
         log('stop')
         pass
-    elif args[0] in ['alert','informa', 'marca', 'anota', 'msg']:
+    elif args[0] in ['alert','informa', 'marca', 'anota', 'msg'] and args[1]:
         # registra marca no registro iniciado (corrente)
-        log('alert')
+        log("alert,"+sys.argv[2:][0])
         pass
     else:
         print 'Opção "%s" inválida!' % args[0]
@@ -45,7 +45,7 @@ def log(msg):
 
     try:
         #escreve mensagem no arquivo com data/hora
-        #FIXME definit melhor formato para data/hora
+        #FIXME definir melhor formato para data/hora
         f.writelines(strftime("%d-%m-%y %H-%M-%S")+","+msg+"\n")
     finally:
         f.close()
