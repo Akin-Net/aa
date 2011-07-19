@@ -23,17 +23,17 @@ def direciona(args):
     if args[0] in ['inicio', 'inicia', 'início', 'start', 'begin']:
         # registra hora de início
         pass
-    elif args[0] in ['fim', 'finaliza', 'termina', 'end']:
+    elif args[0] in ['stop','fim', 'finaliza', 'termina', 'end']:
         # registra hora de fim
         pass
-    elif args[0] in ['informa', 'marca', 'anota', 'msg']:
+    elif args[0] in ['alert','informa', 'marca', 'anota', 'msg']:
         # registra marca no registro iniciado (corrente)
         pass
     else:
         print 'Opção "%s" inválida!' % args[0]
 
 if __name__=="__main__":
-    if len(sys.argv) > 2:
+    if len(sys.argv) > 1:
         direciona(sys.argv[1:])
     else:
         print instrucoes
