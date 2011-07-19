@@ -6,7 +6,7 @@
 
 import sys
 import os
-from time import time
+import time
 
 instrucoes = """
 Administrador da Ágora
@@ -21,24 +21,27 @@ Uso:
 
 def direciona(args):
     if args[0] in ['inicio', 'inicia', 'início', 'start', 'begin']:
-        log('start')
         # registra hora de início
+        log('start')
         pass
     elif args[0] in ['stop','fim', 'finaliza', 'termina', 'end']:
-        log('stop')
         # registra hora de fim
+        log('stop')
         pass
     elif args[0] in ['alert','informa', 'marca', 'anota', 'msg']:
-        log('alert')
         # registra marca no registro iniciado (corrente)
+        log('alert')
         pass
     else:
         print 'Opção "%s" inválida!' % args[0]
 
 def log(msg):
+    # salva alteracoes no arquivo /tmp/.aa.txt
+    #FIXME salvar na home do usuário
     f = open("/tmp/.aa.txt","a")
     try:
-        f.writelines(msg+"\n")
+        #escreve mensagem no arquivo com data/hora
+        f.writelines(time.strftime("%d-%m-%y %H-%M-%S")+","+msg+"\n")
     finally:
         f.close()
     return
