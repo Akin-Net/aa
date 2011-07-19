@@ -6,7 +6,8 @@
 
 import sys
 import os
-import time
+from time import time, strftime
+from threading import Timer
 
 instrucoes = """
 Administrador da Ágora
@@ -41,10 +42,13 @@ def log(msg):
     f = open("/tmp/.aa.txt","a")
     try:
         #escreve mensagem no arquivo com data/hora
-        f.writelines(time.strftime("%d-%m-%y %H-%M-%S")+","+msg+"\n")
+        f.writelines(strftime("%d-%m-%y %H-%M-%S")+","+msg+"\n")
     finally:
         f.close()
     return
+
+def aviso_fim():
+    print "acabou a sessão"
 
 
 if __name__=="__main__":
