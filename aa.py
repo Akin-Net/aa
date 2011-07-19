@@ -21,6 +21,7 @@ Uso:
 """
 
 def direciona(args):
+    """ Trata os argumentos do AA """
     if args[0] in ['inicio', 'inicia', 'início', 'start', 'begin']:
         # registra hora de início
         log('start')
@@ -37,21 +38,22 @@ def direciona(args):
         print 'Opção "%s" inválida!' % args[0]
 
 def log(msg):
-    # salva alteracoes no arquivo /tmp/.aa.txt
-    #FIXME salvar na home do usuário
-    f = open("/tmp/.aa.txt","a")
+    """ Salva mensagens no arquivo temporario """
+
+    f = open(home+"/.aa.txt","a")
+
     try:
         #escreve mensagem no arquivo com data/hora
+        #FIXME definit melhor formato para data/hora
         f.writelines(strftime("%d-%m-%y %H-%M-%S")+","+msg+"\n")
     finally:
         f.close()
     return
 
-def aviso_fim():
-    print "acabou a sessão"
-
-
 if __name__=="__main__":
+    global home
+    home = os.getenv('HOME')
+
     if len(sys.argv) > 1:
         direciona(sys.argv[1:])
     else:
