@@ -14,15 +14,16 @@ Administrador da Ágora
 
 Uso:
 
-   aa start            = avisa que começou as atividades do dia
+   aa start             = avisa que começou as atividades do dia
    aa alert <resumo>    = anota o que está fazendo em uma mensagem curta
-   aa stop               = avisa que terminou as atividades do dia
+   aa stop              = avisa que terminou as atividades do dia
   
 """
 
 def direciona(args):
     """ Trata os argumentos do AA """
-    if args[0] in ['inicio', 'inicia', 'início', 'start', 'begin']:
+    #talvez usar o argparse?
+    if args[0] in ['start','inicio', 'inicia', 'início', 'begin']:
         # registra hora de início
         log('start')
         pass
@@ -32,6 +33,7 @@ def direciona(args):
         pass
     elif args[0] in ['alert','informa', 'marca', 'anota', 'msg'] and args[1]:
         # registra marca no registro iniciado (corrente)
+        #FIXME só funciona se a mensagem estiver entre parenteses:
         log("alert,"+sys.argv[2:][0])
         pass
     else:
