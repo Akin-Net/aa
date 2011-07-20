@@ -33,12 +33,12 @@ def termina():
   f = open(home+"/.aa.txt", "r")
   str = f.readline()
   while (len(str) > 0):
+    # prepare the string
     str = str.split('\n')
     str = str[0].split(',')
-    #msg = {'user': USER_MACAMBIRA, 'log': str[0]+'::'+str[1]}
-    msg = {'user': '1', 'log': str[0]+'::'+str[1]}
+    msg = {'user': os.getenv('NICKNAME'), 'log': str[0]+'::'+str[1]}
     dados = urllib.urlencode(msg)
-    # envia a string
+    # sends the string
     req = urllib2.Request('http://nightsc.com.br/aa/novo_log.php', dados)
     res = urllib2.urlopen(req)
     pagina = res.read()
