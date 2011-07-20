@@ -11,29 +11,28 @@ from time import time, strftime
 from threading import Timer
 
 instrucoes = """
-Administrador da Ágora
+AA
 
-Uso:
+Using:
 
-   aa start             = avisa que começou as atividades do dia
-   aa alert <resumo>    = anota o que está fazendo em uma mensagem curta
-   aa stop              = avisa que terminou as atividades do dia
+   aa start             = starts the work session of the day
+   aa alert <resumo>    = alerts what he is doing now
+   aa stop              = stops the work session of the day
   
 """
 
 def comeca():
-  """ Inicializa a sessão """
+  """Start the session"""
   home = os.getenv("HOME")
   f = open(home+"/.aa.txt", "w")
   f.close()
 
 def termina():
-  """ Termina a sessão """
+  """Stop the session"""
   home = os.getenv("HOME")
   f = open(home+"/.aa.txt", "r")
   str = f.readline()
   while (len(str) > 0):
-    # prepara a string
     str = str.split('\n')
     str = str[0].split(',')
     #msg = {'user': USER_MACAMBIRA, 'log': str[0]+'::'+str[1]}
@@ -43,36 +42,32 @@ def termina():
     req = urllib2.Request('http://nightsc.com.br/aa/novo_log.php', dados)
     res = urllib2.urlopen(req)
     pagina = res.read()
-    print pagina
     str = f.readline()
 
   res.close()
 
-  # server: nightsc.com.br / aa/novo_log.php
-
 def direciona(args):
-    """ Trata os argumentos do AA """
+    """Parse AA arguments"""
     #talvez usar o argparse?
     if args[0] in ['start','inicio', 'inicia', 'início', 'begin']:
-        # registra hora de início
         comeca()
         log('start')
-        pass
+        print '[AA] Your session has started. Happy hacking!'
     elif args[0] in ['stop','fim', 'finaliza', 'termina', 'end']:
         # registra hora de fim
         log('stop')
         termina()
-        pass
+        print '[AA] You ended the sesssion and published at http://nightsc.com.br/aa. CYA!'
     elif args[0] in ['alert','informa', 'marca', 'anota', 'msg'] and args[1]:
         # registra marca no registro iniciado (corrente)
         #FIXME só funciona se a mensagem estiver entre parenteses:
         log("alert "+sys.argv[2:][0])
-        pass
+        print '[AA] New alert: "%s" logged.' % sys.argv[2:][0]
     else:
         print 'Opção "%s" inválida!' % args[0]
 
 def log(msg):
-    """ Salva mensagens no arquivo temporario """
+    """Saves messages on the ~/.aa.txt temp file"""
 
     home = os.getenv('HOME')
     f = open(home+"/.aa.txt","a")
@@ -86,7 +81,6 @@ def log(msg):
     return
 
 if __name__=="__main__":
-
     if len(sys.argv) > 1:
         direciona(sys.argv[1:])
     else:

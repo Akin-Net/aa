@@ -1,27 +1,34 @@
-AA - Admin da Ágora
-===================
+AA
+==
 
-PS: viajado demais... é mais simples que isso... mas fica a ideia dos comandos sh para disparar eventos de alerta... na verdade basta modificar o bd e avisar o cliente, ponto. e o cliente baixar a todo list.
+Introduction
+============
 
-Em cada usuário...
+aa    = Main interface (aa start, aa alert 'foo', aa stop)
+aad   = Daemon started by aa (or could we use just threads from aa?)
 
-aa    = Programinha que o usuário verá
-aad   = Daemon que ficará rodando na máquina do usuário recebendo mensagens do aaa
+Installing
+==========
 
-No controle...
+First of all, define your nickname:
 
-aaa  = Manda alertas para o aad
-aaaw = Mostra a página web listando o que há no bd e permitindo editar descs
+    $ export NICKNAME='your nickname here'
 
-No geral...
+Add that to the end of your ~/.bashrc.
 
- Usuário X                         Controle
- aa inicio ----------------------> BD = usuário X iniciou em ...
- aa anota "foo" -----------------> BD = usuário X anotou "foo" em ...
- aad = "ACABOU O TEMPO!" <-------- aaa X ACABOU O TEMPO!
- aa fim -------------------------> BD = usuário X terminou em ...
- 
-O usuário poderá quando quiser acessar a URL do aaaw para ver o histórico de
-suas atividades e modificá-las/melhorá-las (acrescentar descrição mais
-elaborada, enviar arquivos do screencast que gravou e afins)...
+Put aa.py on your /usr/local/bin:
+
+    $ sudo cp aa.py /usr/local/bin/aa
+
+Using
+=====
+
+Now you can use:
+
+    $ aa start         ... start your session
+    $ aa alert 'foo'   ... alert 'foo'
+    $ aa stop          ... stop your session
+
+
+
  
