@@ -20,6 +20,10 @@ Put aa.py on your /usr/local/bin:
 
     $ sudo cp aa.py /usr/local/bin/aa
 
+Or just create a link:
+
+    $ sudo ln -s /path/to/aa.py /usr/local/bin/aa
+
 Using
 =====
 
@@ -29,6 +33,7 @@ Now you can use:
     $ aa alert 'foo'   ... alert 'foo'
     $ aa stop          ... stop your session
 
-
+For now, just 'aa stop' will send your 'work log' to the server. You
+can see your log at http://nightsc.com.br/aa
 
  
