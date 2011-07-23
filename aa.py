@@ -50,23 +50,20 @@ def termina():
   home = os.getenv("HOME")
   f = open(home+"/.aa.txt", "r")
   alertas = f.read().splitlines()
+  f.close()
   for alerta in alertas:
     # prepare the string
     alerta = alerta.split(',')
-    print(alerta)
     msg = {'user': os.getenv('NICKNAME'), 'log': alerta[0]+'::'+alerta[1]}
     dados = urllib.parse.urlencode(msg)
     # sends the string
-    print("ENVIANDO")
-    print(dados)
-    req = urllib.request.Request('http://nightsc.com.br/aa/novo_log.php', dados)
-    print("ENVIADO")
+    print("Sending:",alerta[1])
+    req = urllib.request.Request('http://nightsc.com.br/aa/novo_log.php',
+                                 dados.encode('ascii'))
     res = urllib.request.urlopen(req)
-    #res = urllib.request.urlopen('http://nightsc.com.br/aa/novo_log.php'
     #pagina = res.read()
-    #str = f.readline()
+    res.close()
 
-  #res.close()
 
 def direciona(args):
     """Parse AA arguments"""
@@ -79,7 +76,7 @@ def direciona(args):
         # registra hora de fim
         log('stop')
         termina()
-        print('[AA] You ended the sesssion and published at' \
+        print('[AA] You ended the sesssion and published at ' \
         'http://nightsc.com.br/aa. CYA!')
     elif args[0] in ['alert','informa', 'marca', 'anota', 'msg'] and args[1]:
         # registra marca no registro iniciado (corrente)
@@ -130,6 +127,7 @@ class Sentinela(object):
 s = Sentinela(0.1)
 #s.iniciar()
 
+print("AQUI",sys.argv[2:])
 
 if __name__=="__main__":
     if len(sys.argv) > 1:
