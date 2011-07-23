@@ -80,9 +80,10 @@ def direciona(args):
         'http://nightsc.com.br/aa. CYA!')
     elif args[0] in ['alert','informa', 'marca', 'anota', 'msg'] and args[1]:
         # registra marca no registro iniciado (corrente)
-        #FIXME só funciona se a mensagem estiver entre parenteses:
-        log("alert "+sys.argv[2:][0])
-        print('[AA] New alert: "%s" logged.' % sys.argv[2:][0])
+        msg = ''.join([pal + " " for pal in sys.argv[2:]])
+        msg = msg.strip()
+        log("alert " + msg)
+        print('[AA] New alert: "%s" logged.' % msg)
     else:
         print('Opção "%s" inválida!' % args[0])
 
@@ -127,7 +128,6 @@ class Sentinela(object):
 s = Sentinela(0.1)
 #s.iniciar()
 
-print("AQUI",sys.argv[2:])
 
 if __name__=="__main__":
     if len(sys.argv) > 1:
