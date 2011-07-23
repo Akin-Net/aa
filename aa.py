@@ -21,7 +21,8 @@
 # Cliente para enviar mensagens ao servidor
 # http://wiki.nosdigitais.teia.org.br/AA_0.0.1
 
-import urllib
+import urllib.request
+import urllib.parse
 import sys
 import os
 from time import time, strftime
@@ -48,20 +49,24 @@ def termina():
   """Stop the session"""
   home = os.getenv("HOME")
   f = open(home+"/.aa.txt", "r")
-  str = f.readline()
-  while (len(str) > 0):
+  alertas = f.read().splitlines()
+  for alerta in alertas:
     # prepare the string
-    str = str.split('\n')
-    str = str[0].split(',')
-    msg = {'user': os.getenv('NICKNAME'), 'log': str[0]+'::'+str[1]}
-    dados = urllib.urlencode(msg)
+    alerta = alerta.split(',')
+    print(alerta)
+    msg = {'user': os.getenv('NICKNAME'), 'log': alerta[0]+'::'+alerta[1]}
+    dados = urllib.parse.urlencode(msg)
     # sends the string
-    req = urllib.request('http://nightsc.com.br/aa/novo_log.php', dados)
-    res = urllib.urlopen(req)
-    pagina = res.read()
-    str = f.readline()
+    print("ENVIANDO")
+    print(dados)
+    req = urllib.request.Request('http://nightsc.com.br/aa/novo_log.php', dados)
+    print("ENVIADO")
+    res = urllib.request.urlopen(req)
+    #res = urllib.request.urlopen('http://nightsc.com.br/aa/novo_log.php'
+    #pagina = res.read()
+    #str = f.readline()
 
-  res.close()
+  #res.close()
 
 def direciona(args):
     """Parse AA arguments"""
@@ -123,7 +128,7 @@ class Sentinela(object):
 
 
 s = Sentinela(0.1)
-s.iniciar()
+#s.iniciar()
 
 
 if __name__=="__main__":
