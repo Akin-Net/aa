@@ -67,7 +67,7 @@ class Sentinela(object):
     def avisar(self):
         """Gives the warning and restarts the Timer"""
         self.vezes = self.vezes + 1
-        os.system('notify-send "AA:" "WTF are you doing?!\n(Trabalhando a '+\
+        os.system('notify-send "AA:" "WTF are you doing?!\n(Trabalhando há '+\
                   str(self.minutos*self.vezes) + ' minutos)"')
         self.timer = Timer(self.minutos*60, self.avisar)
         self.timer.start()
