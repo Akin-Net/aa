@@ -8,7 +8,7 @@ import sys
 config = configparser.RawConfigParser()
 
 def configura_default():
-    config['user'] = {'nickname': None, 'email': None}
+    config['user'] = {'nickname':'' , 'email': '', 'interval': 15}
     __save()
 
 def __save():
@@ -17,13 +17,22 @@ def __save():
 
 def configura(params):
     config.read(__get_config_file())
-    config['user'][params[0]] = params[1]
+    if len(params) == 2:
+        attribute, value = params
+        if attribute.count('.') == 1:
+            section, attribute = attribute.split('.')
+            if not (section in config):
+                config[section] = {}
+            config[section][attribute] = value
+        else:
+            config['user'][attribute] = value
     #config.set('user', params[0], params[1])
     __save()
 
-def get_config(param):
+def get_config(params):
     config.read(__get_config_file())
-    return config['user'][param]
+    section, attribute = params
+    return config[section][attribute]
 
 def __get_config_file():
     return os.getenv('HOME')+'/.aaconfig'

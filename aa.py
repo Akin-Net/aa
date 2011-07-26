@@ -112,7 +112,7 @@ def enviar():
     for alerta in alertas:
         # prepare the string
         alerta = alerta.split(',')
-        msg = {'user': aaconfig.get_config('nickname'), 'log': alerta[0]+'::'+alerta[1]}
+        msg = {'user': aaconfig.get_config(['user','nickname']), 'log': alerta[0]+'::'+alerta[1]}
         dados = urllib.parse.urlencode(msg)
         # sends the string
         print("Sending:",alerta[1])
@@ -135,8 +135,7 @@ def termina():
 def daemonificar():
     """Runs the daemon"""
     global Sent, Envi
-    # FIXME permitir configurar esse tempo
-    Sent = Sentinela(15)
+    Sent = Sentinela(int(aaconfig.get_config(['user','interval'])))
     Sent.iniciar()
     Envi = Enviador(0.25)
     Envi.iniciar()
