@@ -30,6 +30,7 @@ import sys
 import os
 from time import time, strftime
 from threading import Timer
+import aaconfig
 
 instrucoes = """
 AA
@@ -39,7 +40,7 @@ Using:
    aa start             = starts the work session of the day
    aa alert <resumo>    = alerts what he is doing now
    aa stop              = stops the work session of the day
-  
+   aa config <config> <valor> = seta valor da config
 """
 
 Sent = None
@@ -92,6 +93,10 @@ def comeca():
     home = os.getenv("HOME")
     f = open(home+"/.aa.txt", "w")
     f.close()
+    try:
+        f = open(os.getenv("HOME")+"/.aaconfig", "r")
+    except IOError:
+        aaconfig.configura_default()
     os.system("aa daemon &")
 
 def enviar():
@@ -107,7 +112,7 @@ def enviar():
     for alerta in alertas:
         # prepare the string
         alerta = alerta.split(',')
-        msg = {'user': os.getenv('NICKNAME'), 'log': alerta[0]+'::'+alerta[1]}
+        msg = {'user': aaconfig.get_config('nickname'), 'log': alerta[0]+'::'+alerta[1]}
         dados = urllib.parse.urlencode(msg)
         # sends the string
         print("Sending:",alerta[1])
@@ -159,6 +164,8 @@ def direciona(args):
         msg = msg.strip()
         log("alert "+msg)
         print('[AA] New alert: "%s" logged.' % msg)
+    elif args[0] in ['config','configura','seta'] and args[1]:
+        aaconfig.configura(sys.argv[2:])
     else:
         print('Opção "%s" inválida!' % args[0])
 
