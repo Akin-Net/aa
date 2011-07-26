@@ -10,12 +10,6 @@ aad   = Daemon started by aa (or could we use just threads from aa?)
 Installing
 ==========
 
-First of all, define your nickname:
-
-    $ export NICKNAME='your nickname here'
-
-Add that to the end of your ~/.bashrc.
-
 Put aa.py on your /usr/local/bin:
 
     $ sudo cp aa.py /usr/local/bin/aa
@@ -29,9 +23,10 @@ Using
 
 Now you can use:
 
-    $ aa start         ... start your session
-    $ aa alert 'foo'   ... alert 'foo'
-    $ aa stop          ... stop your session
+    $ aa start                    ... start your session
+    $ aa alert 'foo'              ... alert 'foo'
+    $ aa stop                     ... stop your session
+    $ aa config nickname yournick ... set your nickname
 
 For now, just 'aa stop' will send your 'work log' to the server. You
 can see your log at http://nightsc.com.br/aa
