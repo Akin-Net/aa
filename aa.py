@@ -93,10 +93,6 @@ def comeca():
     home = os.getenv("HOME")
     f = open(home+"/.aa.txt", "w")
     f.close()
-    try:
-        f = open(os.getenv("HOME")+"/.aaconfig", "r")
-    except IOError:
-        aaconfig.configura_default()
     os.system("aa daemon &")
 
 def enviar():
