@@ -17,6 +17,8 @@ def __save():
 
 def configura(params):
     config.read(__get_config_file())
+    if not config.has_section('user'):
+        configura_default()
     if len(params) == 2:
         attribute, value = params
         if attribute.count('.') == 1:
