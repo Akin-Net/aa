@@ -30,6 +30,7 @@ import sys
 import os
 from time import time, strftime
 from threading import Timer
+import aaconfig
 
 instrucoes = """
 AA
@@ -39,7 +40,7 @@ Using:
    aa start             = starts the work session of the day
    aa alert <resumo>    = alerts what he is doing now
    aa stop              = stops the work session of the day
-  
+   aa config <config> <valor> = seta valor da config
 """
 
 Sent = None
@@ -107,7 +108,7 @@ def enviar():
     for alerta in alertas:
         # prepare the string
         alerta = alerta.split(',')
-        msg = {'user': os.getenv('NICKNAME'), 'log': alerta[0]+'::'+alerta[1]}
+        msg = {'user': aaconfig.get_config(['user','nickname']), 'log': alerta[0]+'::'+alerta[1]}
         dados = urllib.parse.urlencode(msg)
         # sends the string
         print("Sending:",alerta[1])
@@ -130,8 +131,7 @@ def termina():
 def daemonificar():
     """Runs the daemon"""
     global Sent, Envi
-    # FIXME permitir configurar esse tempo
-    Sent = Sentinela(15)
+    Sent = Sentinela(int(aaconfig.get_config(['user','interval'])))
     Sent.iniciar()
     Envi = Enviador(0.25)
     Envi.iniciar()
@@ -185,4 +185,4 @@ if __name__=="__main__":
     if len(sys.argv) > 1:
         direciona(sys.argv[1:])
     else:
-        print(instrucoes)
+	print(instrucoes)
